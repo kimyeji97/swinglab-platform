@@ -1,0 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /common
+
+api-test: true
+
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: false
+        show_sql: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://13.125.190.65:5432/swinglab?currentSchema=public&useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&stringtype=unspecified
+    username: swinglab
+    password: qhdks@00
+  data:
+    redis:
+      host: 13.125.190.65
+      port: 6379
+      password: swinglabqhdks@00
+
+security:
+  jwt:
+    # 2023-rlvdmstodrkr-tmdnldfoq-vmffotvha-tlzmfltzl MjAyMy1ybHZkbXN0b2Rya3ItdG1kbmxkZm9xLXZtZmZvdHZoYS10bHptZmx0emw=
+    key: 2023-rlvdmstodrkr-tmdnldfoq-vmffotvha-tlzmfltzl
+  permitAll: >
+    /v1/auth/login
+    , /v1/auth/signup
+    , /v1/auth/login/refresh
+  ignoring: >
+    /favicon.ico
+    , /test/**
+    , /error
+    , /v1/book/{bookId}/check/in

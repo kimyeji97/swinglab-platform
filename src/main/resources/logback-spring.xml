@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <property name="LOG_HOME" value="/opt/swinglab-platform/logs"/>
+    <property name="LOG_BACKUP_HOME" value="${LOG_HOME}/backup"/>
+    <property name="LOG_PREFIX" value="swinglab" />
+    
+    <property name="MAX_HISTORY" value="15" />
+    <property name="MAX_FILE_SIZE" value="100MB"/>
+
+    <property name="DEBUG_PATTERN" value="%d{HH:mm:ss.SSS} [%tid]-[%X{TXID}] [%-5level] %class{0}.%M:%L - %msg%n"/>
+    <property name="INFO_PATTERN"  value="%d{HH:mm:ss.SSS} [%X{TXID}] [%-5level] %class{0}.%M:%L - %msg%n"/>
+    <property name="DETAIL_PATTERN"  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%tid]-[%X{TXID}] [%-5level] %class.%M:%L - %msg%n"/>
+    <property name="MESSAGE_PATTERN" value="%msg%n"/>
+
+    <!-- console log -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${DETAIL_PATTERN}
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- error log -->
+    <appender name="SWINGLAB_ERROR_SYNC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+        </filter>
+        <file>${LOG_HOME}/${LOG_PREFIX}_error.log</file>
+        <encoder>
+            <pattern>${DEBUG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BACKUP_HOME}/${LOG_PREFIX}_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SWINGLAB_ERROR_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SWINGLAB_ERROR_SYNC" />
+        <includeCallerData>true</includeCallerData>
+        <neverBlock>true</neverBlock>
+        <queueSize>4096</queueSize>
+    </appender>
+
+
+
+    <!-- debug log -->
+    <appender name="SWINGLAB_DEBUG_SYNC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_PREFIX}_debug.log</file>
+        <encoder>
+            <pattern>${DEBUG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BACKUP_HOME}/${LOG_PREFIX}_debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SWINGLAB_DEBUG_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SWINGLAB_DEBUG_SYNC" />
+        <includeCallerData>true</includeCallerData>
+        <neverBlock>true</neverBlock>
+        <queueSize>4096</queueSize>
+    </appender>
+
+
+
+    <!-- http payload log -->
+    <appender name="SWINGLAB_HTTP_PAYLOAD_SYNC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_PREFIX}_payload.log</file>
+        <encoder>
+            <pattern>${INFO_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BACKUP_HOME}/${LOG_PREFIX}_payload.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SWINGLAB_HTTP_PAYLOAD_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SWINGLAB_HTTP_PAYLOAD_SYNC" />
+        <includeCallerData>true</includeCallerData>
+        <neverBlock>true</neverBlock>
+        <queueSize>1024</queueSize>
+    </appender>
+
+
+
+    <!-- batch log -->
+    <appender name="SWINGLAB_BATCH_SYNC" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${LOG_PREFIX}_batch.log</file>
+        <encoder>
+            <pattern>${DEBUG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BACKUP_HOME}/${LOG_PREFIX}_batch.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+        </rollingPolicy>
+    </appender>
+    <appender name="SWINGLAB_BATCH_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="SWINGLAB_BATCH_SYNC" />
+        <includeCallerData>true</includeCallerData>
+        <neverBlock>true</neverBlock>
+        <queueSize>4096</queueSize>
+    </appender>
+
+
+
+    <conversionRule conversionWord="tid" converterClass="com.dailystudy.swinglab.service.framework.http.request.ThreadIdConverter"/>
+
+
+    <logger name="com.dailystudy.swinglab" level="debug" additivity="false">
+        <appender-ref ref="SWINGLAB_DEBUG_APPENDER"/>
+        <appender-ref ref="SWINGLAB_ERROR_APPENDER"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.hibernate" level="info" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.springframework" level="info" additivity="false">
+        <appender-ref ref="SWINGLAB_DEBUG_APPENDER"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+
+    <!-- ######################################################### -->
+    <!-- START common Logger Configuration -->
+    <!-- ######################################################### -->
+    <logger name="SWINGLAB_ERROR" level="error" additivity="false">
+        <appender-ref ref="SWINGLAB_DEBUG_APPENDER"/>
+        <appender-ref ref="SWINGLAB_ERROR_APPENDER"/>
+    </logger>
+
+    <logger name="SWINGLAB_DEBUG" level="debug" additivity="false">
+        <appender-ref ref="SWINGLAB_DEBUG_APPENDER"/>
+    </logger>
+
+    <logger name="SWINGLAB_HTTP_PAYLOAD" level="debug" additivity="false">
+        <appender-ref ref="SWINGLAB_HTTP_PAYLOAD_APPENDER"/>
+    </logger>
+
+    <logger name="SWINGLAB_BATCH" level="debug" additivity="false">
+        <appender-ref ref="SWINGLAB_BATCH_APPENDER"/>
+    </logger>
+
+    <!-- ######################################################### -->
+    <!-- Configuration END-->
+    <!-- ######################################################### -->
+
+    <root level="debug">
+        <appender-ref ref="SWINGLAB_DEBUG_APPENDER"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

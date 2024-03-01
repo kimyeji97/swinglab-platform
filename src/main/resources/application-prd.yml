@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /common
+
+api-test: false
+
+spring:
+  batch:
+    jdbc:
+      initialize-schema: always
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          lob:
+            non_contextual_creation: false
+        show_sql: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/swinglab?currentSchema=public&useSSL=false&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&stringtype=unspecified
+    username: swinglab
+    password: qhdks@00
+  data:
+    redis:
+      host: 13.125.190.65
+      port: 6379
+      password: swinglabqhdks@00
